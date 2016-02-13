@@ -34,6 +34,9 @@ namespace Lag
             screenManager = new ScreenManager(Content);
             screenManager.GoTo(new LevelScreen());
 
+            IsFixedTimeStep = true;
+            TargetElapsedTime = System.TimeSpan.FromMilliseconds(1000.0 / 60.0); // 60 FPS
+
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
             graphics.ApplyChanges();
