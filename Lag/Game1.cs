@@ -13,6 +13,8 @@ namespace Lag
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Texture2D backgroundTex;
+
         ScreenManager screenManager;
 
         public Game1()
@@ -32,6 +34,10 @@ namespace Lag
             screenManager = new ScreenManager(Content);
             screenManager.GoTo(new LevelScreen());
 
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 600;
+            graphics.ApplyChanges();
+
             base.Initialize();
         }
 
@@ -43,6 +49,8 @@ namespace Lag
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            backgroundTex = Content.Load<Texture2D>("background");
         }
 
         /// <summary>
@@ -78,6 +86,7 @@ namespace Lag
             GraphicsDevice.Clear(Color.MonoGameOrange);
 
             spriteBatch.Begin();
+            spriteBatch.Draw(backgroundTex, Vector2.Zero, Color.White);
             screenManager.Draw(gameTime, spriteBatch); // Draw the active screen.
             spriteBatch.End();
 
