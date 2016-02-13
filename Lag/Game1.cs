@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Lag.Screens;
 
 namespace Lag
 {
@@ -11,6 +12,8 @@ namespace Lag
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        ScreenManager screenManager;
 
         public Game1()
         {
@@ -26,7 +29,8 @@ namespace Lag
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            screenManager = new ScreenManager(Content);
+            screenManager.GoTo(new LevelScreen());
 
             base.Initialize();
         }
@@ -39,8 +43,6 @@ namespace Lag
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -49,7 +51,6 @@ namespace Lag
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -59,10 +60,11 @@ namespace Lag
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            // Update the active screen
+            screenManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -73,9 +75,11 @@ namespace Lag
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.MonoGameOrange);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            screenManager.Draw(gameTime, spriteBatch); // Draw the active screen.
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
