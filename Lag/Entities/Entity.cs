@@ -9,7 +9,7 @@ namespace Lag.Entities
     /// <summary>
     /// Represents a moving entity in the game world.
     /// </summary>
-    class Entity
+    abstract class Entity
     {
         /// <summary>
         /// The collision radius of this entity.
