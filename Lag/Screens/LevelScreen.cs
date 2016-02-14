@@ -20,11 +20,16 @@ namespace Lag.Screens
         private ContentManager contentManager;
 
         private Player player;
+
         private List<Enemy> enemies;
         private Queue<Enemy> deadEnemies;
-
         double enemySpawnInterval = 2.0;
         double enemySpawnTimer = 0.0;
+
+        private List<Pickup> pickups;
+        private Queue<Pickup> deadPickups;
+        double pickupSpawnInterval = 4.13;
+        double pickupSpawnTimer = 0.5;
 
         private const int MAP_WIDTH = 800;
         private const int MAP_HEIGHT = 600;
@@ -33,8 +38,12 @@ namespace Lag.Screens
             : base()
         {
             player = new Player(new Vector2(MAP_WIDTH / 2.0f, MAP_HEIGHT / 2.0f));
+
             enemies = new List<Enemy>();
             deadEnemies = new Queue<Enemy>();
+
+            pickups = new List<Pickup>();
+            deadPickups = new Queue<Pickup>();
         }
 
         public override void LoadContent(ContentManager contentManager)
@@ -64,6 +73,27 @@ namespace Lag.Screens
                 }
             }
 
+
+            // Decrement pickup spawn timer and spawn if the interval has expired.
+            pickupSpawnTimer -= gameTime.ElapsedGameTime.TotalSeconds;
+            if (pickupSpawnTimer <= 0.0)
+            {
+                SpawnPickup();
+                pickupSpawnTimer = pickupSpawnInterval; // Reset the timer.
+            }
+
+            foreach (Pickup pickup in pickups)
+            {
+                pickup.Update(gameTime);
+
+                // If the enemy is dead or outside the map, put on removal queue.
+                if (pickup.IsDead || pickup.Position.X > MAP_WIDTH + 30)
+                {
+                    deadPickups.Enqueue(pickup);
+                }
+            }
+
+
             // Remove any dead enemies from the enemies list.
             RemoveDeadEnemies();
 
@@ -75,6 +105,11 @@ namespace Lag.Screens
             foreach (Enemy enemy in enemies)
             {
                 enemy.Draw(gameTime, spriteBatch);
+            }
+
+            foreach (Pickup pickup in pickups)
+            {
+                pickup.Draw(gameTime, spriteBatch);
             }
 
             player.Draw(gameTime, spriteBatch);
@@ -94,6 +129,19 @@ namespace Lag.Screens
         }
 
         /// <summary>
+        /// Spawns a new pickup on the left side of the level at a random y position.
+        /// </summary>
+        public void SpawnPickup()
+        {
+            // Generate a random y position.
+            float randHeight = (float)LagGame.Rand.NextDouble() * (float)MAP_HEIGHT;
+            // Spawn the pickup at that height and off of the left-hand edge.
+            Pickup newPickup = new Pickup(new Vector2(-30.0f, randHeight), new Vector2(3.0f, 0.0f));
+            newPickup.LoadContent(contentManager);
+            pickups.Add(newPickup);
+        }
+
+        /// <summary>
         /// Removes all dead enemies from the level.
         /// </summary>
         public void RemoveDeadEnemies()
@@ -101,6 +149,17 @@ namespace Lag.Screens
             while (deadEnemies.Count > 0)
             {
                 enemies.Remove(deadEnemies.Dequeue());
+            }
+        }
+
+        /// <summary>
+        /// Removes all dead pickups from the level.
+        /// </summary>
+        public void RemoveDeadPickups()
+        {
+            while (deadPickups.Count > 0)
+            {
+                pickups.Remove(deadPickups.Dequeue());
             }
         }
     }

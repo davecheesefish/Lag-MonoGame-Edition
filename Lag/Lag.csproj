@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Entities\Enemy.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Pickup.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="LagGame.cs" />
     <Compile Include="InputManager.cs" />
@@ -74,6 +75,7 @@
   <ItemGroup>
     <Content Include="Content\background.png" />
     <Content Include="Content\enemy.png" />
+    <Content Include="Content\pickup.png" />
     <Content Include="Content\player.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
