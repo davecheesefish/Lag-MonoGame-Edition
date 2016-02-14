@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace Lag
@@ -73,6 +74,42 @@ namespace Lag
         public bool KeyReleased(Keys key)
         {
             return keyboardState.IsKeyUp(key) && oldKeyboardState.IsKeyDown(key);
+        }
+
+        /// <summary>
+        /// Returns a unit vector in the direction that the movement controls are being pressed in.
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 GetMovementInput()
+        {
+            Vector2 inputVector = new Vector2(0.0f);
+            InputManager input = InputManager.Instance;
+
+            // Check UP input (up arrow / w).
+            if (input.IsKeyDown(Keys.Up) || input.IsKeyDown(Keys.W))
+            {
+                inputVector.Y -= 1.0f;
+            }
+
+            // Check DOWN input (down arrow / s).
+            if (input.IsKeyDown(Keys.Down) || input.IsKeyDown(Keys.S))
+            {
+                inputVector.Y += 1.0f;
+            }
+
+            // Check LEFT input (left arrow / a).
+            if (input.IsKeyDown(Keys.Left) || input.IsKeyDown(Keys.A))
+            {
+                inputVector.X -= 1.0f;
+            }
+
+            // Check LEFT input (right arrow / d).
+            if (input.IsKeyDown(Keys.Right) || input.IsKeyDown(Keys.D))
+            {
+                inputVector.X += 1.0f;
+            }
+
+            return inputVector;
         }
     }
 }
