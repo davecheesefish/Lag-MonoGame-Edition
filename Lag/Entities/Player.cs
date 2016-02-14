@@ -46,7 +46,7 @@ namespace Lag.Entities
         public Player(Vector2 position)
             : base(position, new Vector2(0.0f))
         {
-            radius = 120.0f;
+            radius = 60.0f;
         }
 
         public void LoadContent(ContentManager content)
