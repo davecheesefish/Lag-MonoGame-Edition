@@ -8,7 +8,7 @@ namespace Lag
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class LagGame : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -17,7 +17,7 @@ namespace Lag
 
         ScreenManager screenManager;
 
-        public Game1()
+        public LagGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
