@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Lag.Screens;
@@ -10,6 +11,12 @@ namespace Lag
     /// </summary>
     public class LagGame : Game
     {
+        /// <summary>
+        /// Shared random number generator instance.
+        /// </summary>
+        public static Random Rand { get { return rand; } }
+        private static Random rand;
+        
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -21,6 +28,7 @@ namespace Lag
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            rand = new Random(541);
         }
 
         /// <summary>
