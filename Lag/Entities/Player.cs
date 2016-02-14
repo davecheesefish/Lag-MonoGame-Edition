@@ -9,17 +9,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Lag.Entities
 {
-    class Player
+    class Player:Entity
     {
         /// <summary>
         /// The radius of the circular player character.
         /// </summary>
-        public float Radius { get { return scale * 120.0f; } }
-        
-        public Vector2 Position { get { return position; } }
-        private Vector2 position;
-
-        private Vector2 velocity;
+        public override float Radius { get { return scale * radius; } }
         
         /// <summary>
         /// Current scale of the player character.
@@ -49,9 +44,9 @@ namespace Lag.Entities
         private Texture2D texture;
 
         public Player(Vector2 position)
+            : base(position, new Vector2(0.0f))
         {
-            this.position = position;
-            this.velocity = new Vector2(0.0f);
+            radius = 120.0f;
         }
 
         public void LoadContent(ContentManager content)
@@ -59,7 +54,7 @@ namespace Lag.Entities
             texture = content.Load<Texture2D>("player");
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             ResolveMotion();
             scale += growthRate;
