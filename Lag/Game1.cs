@@ -34,6 +34,8 @@ namespace Lag
             screenManager = new ScreenManager(Content);
             screenManager.GoTo(new LevelScreen());
 
+            InputManager.Instance.Initialize();
+
             IsFixedTimeStep = true;
             TargetElapsedTime = System.TimeSpan.FromMilliseconds(1000.0 / 60.0); // 60 FPS
 
@@ -71,8 +73,12 @@ namespace Lag
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            InputManager.Instance.Update();
+            
+            if (InputManager.Instance.KeyReleased(Keys.Escape))
+            {
                 Exit();
+            }
 
             // Update the active screen
             screenManager.Update(gameTime);
