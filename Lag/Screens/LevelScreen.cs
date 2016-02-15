@@ -76,6 +76,7 @@ namespace Lag.Screens
                 enemySpawnTimer = enemySpawnInterval; // Reset the timer.
             }
 
+            // Update enemies.
             foreach (Enemy enemy in enemies)
             {
                 enemy.Update(gameTime);
@@ -87,6 +88,9 @@ namespace Lag.Screens
                 }
             }
 
+            // Remove any dead enemies from the enemies list.
+            RemoveDeadEnemies();
+
 
             // Decrement pickup spawn timer and spawn if the interval has expired.
             pickupSpawnTimer -= gameTime.ElapsedGameTime.TotalSeconds;
@@ -96,9 +100,17 @@ namespace Lag.Screens
                 pickupSpawnTimer = pickupSpawnInterval; // Reset the timer.
             }
 
+            // Update pickups.
             foreach (Pickup pickup in pickups)
             {
                 pickup.Update(gameTime);
+
+                // Check for collision with player.
+                if (CheckCollision(pickup, player))
+                {
+                    score += 10;
+                    pickup.Kill();
+                }
 
                 // If the enemy is dead or outside the map, put on removal queue.
                 if (pickup.IsDead || pickup.Position.X > MAP_WIDTH + 30)
@@ -107,9 +119,9 @@ namespace Lag.Screens
                 }
             }
 
-
-            // Remove any dead enemies from the enemies list.
-            RemoveDeadEnemies();
+            // Remove any dead pickups from the enemies list.
+            RemoveDeadPickups();
+            
 
             player.Update(gameTime);
         }
@@ -187,6 +199,22 @@ namespace Lag.Screens
             {
                 pickups.Remove(deadPickups.Dequeue());
             }
+        }
+
+        /// <summary>
+        /// Checks for collision between two entities.
+        /// </summary>
+        /// <param name="ent1">The first entity.</param>
+        /// <param name="ent2">The second entity.</param>
+        /// <returns>True if the entities are in collision, false otherwise.</returns>
+        public bool CheckCollision(Entity ent1, Entity ent2)
+        {
+            // Get the sum of the entities' collision radii.
+            float radiusSum = ent1.Radius + ent2.Radius;
+
+            // If the radius sum squared is more than the square distance between the entities, they
+            // are colliding.
+            return (radiusSum * radiusSum) >= (ent2.Position - ent1.Position).LengthSquared();
         }
     }
 }
