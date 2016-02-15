@@ -19,6 +19,18 @@ namespace Lag.Screens
         /// </summary>
         private ContentManager contentManager;
 
+        /// <summary>
+        /// The font for drawing all HUD elements.
+        /// </summary>
+        private SpriteFont hudFont;
+
+        /// <summary>
+        /// The background texture for HUD elements.
+        /// </summary>
+        private Texture2D hudTexture;
+
+        private int score = 0;
+
         private Player player;
 
         private List<Enemy> enemies;
@@ -49,6 +61,8 @@ namespace Lag.Screens
         public override void LoadContent(ContentManager contentManager)
         {
             this.contentManager = contentManager;
+            hudFont = contentManager.Load<SpriteFont>(@"fonts\hudfont");
+            hudTexture = contentManager.Load<Texture2D>("hud");
             player.LoadContent(contentManager);
         }
 
@@ -102,6 +116,8 @@ namespace Lag.Screens
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            DrawHud(spriteBatch);
+            
             foreach (Enemy enemy in enemies)
             {
                 enemy.Draw(gameTime, spriteBatch);
@@ -113,6 +129,16 @@ namespace Lag.Screens
             }
 
             player.Draw(gameTime, spriteBatch);
+        }
+
+        /// <summary>
+        /// Draws all HUD elements.
+        /// </summary>
+        /// <param name="spriteBatch">The SpriteBatch to use when drawing.</param>
+        private void DrawHud(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(hudTexture, new Vector2(5, 5), new Rectangle(0, 0, 115, 76), Color.White);
+            spriteBatch.DrawString(hudFont, score.ToString(), new Vector2(11, 33), Color.White);
         }
 
         /// <summary>
