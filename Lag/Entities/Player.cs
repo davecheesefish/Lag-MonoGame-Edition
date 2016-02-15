@@ -102,5 +102,10 @@ namespace Lag.Entities
             // Apply position change.
             position += velocity;
         }
+
+        public Buddy SpawnBuddy()
+        {
+            return new Buddy(this, this.position);
+        }
     }
 }

@@ -32,6 +32,7 @@ namespace Lag.Screens
         private int score = 0;
 
         private Player player;
+        private Buddy buddy;
 
         private List<Enemy> enemies;
         private Queue<Enemy> deadEnemies;
@@ -50,6 +51,7 @@ namespace Lag.Screens
             : base()
         {
             player = new Player(new Vector2(MAP_WIDTH / 2.0f, MAP_HEIGHT / 2.0f));
+            buddy = player.SpawnBuddy();
 
             enemies = new List<Enemy>();
             deadEnemies = new Queue<Enemy>();
@@ -64,6 +66,7 @@ namespace Lag.Screens
             hudFont = contentManager.Load<SpriteFont>(@"fonts\hudfont");
             hudTexture = contentManager.Load<Texture2D>("hud");
             player.LoadContent(contentManager);
+            buddy.LoadContent(contentManager);
         }
 
         public override void Update(GameTime gameTime)
@@ -112,6 +115,13 @@ namespace Lag.Screens
                     pickup.Kill();
                 }
 
+                // Check for collision with buddy.
+                if (CheckCollision(pickup, buddy))
+                {
+                    score += 20;
+                    pickup.Kill();
+                }
+
                 // If the enemy is dead or outside the map, put on removal queue.
                 if (pickup.IsDead || pickup.Position.X > MAP_WIDTH + 30)
                 {
@@ -124,6 +134,7 @@ namespace Lag.Screens
             
 
             player.Update(gameTime);
+            buddy.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -141,6 +152,7 @@ namespace Lag.Screens
             }
 
             player.Draw(gameTime, spriteBatch);
+            buddy.Draw(spriteBatch);
         }
 
         /// <summary>

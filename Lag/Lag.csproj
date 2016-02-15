@@ -53,6 +53,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Entities\Buddy.cs" />
     <Compile Include="Entities\Enemy.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Pickup.cs" />
@@ -74,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\background.png" />
+    <Content Include="Content\buddy.png" />
     <Content Include="Content\enemy.png" />
     <Content Include="Content\hud.png" />
     <Content Include="Content\pickup.png" />
