@@ -14,7 +14,7 @@ namespace Lag.Entities
         /// <summary>
         /// The collision radius of this entity.
         /// </summary>
-        public virtual float Radius { get { return Radius; } }
+        public virtual float Radius { get { return radius; } }
         protected float radius = 0;
 
         public Vector2 Position { get { return position; } }
