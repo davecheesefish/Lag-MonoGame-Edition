@@ -37,14 +37,14 @@ namespace Lag.Entities
             texture = contentManager.Load<Texture2D>("buddy");
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, int lag)
         {
             // Increment the orbit timer.
             float distanceFromPlayer = player.Radius + 30;
             
             orbitTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             // Position Buddy so it is not within the player character.
-            position = player.Position + new Vector2(distanceFromPlayer * (float)Math.Cos(orbitTimer * 2.0f), distanceFromPlayer * (float)Math.Sin(orbitTimer * 2.0f));
+            position = player.GetPastPosition(lag) + new Vector2(distanceFromPlayer * (float)Math.Cos(orbitTimer * 2.0f), distanceFromPlayer * (float)Math.Sin(orbitTimer * 2.0f));
         }
 
         public void Draw(SpriteBatch spriteBatch)

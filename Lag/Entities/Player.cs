@@ -12,10 +12,21 @@ namespace Lag.Entities
     class Player:Entity
     {
         /// <summary>
+        /// The maximum number of past positions to store. This is the maximum number of frames
+        /// behind the player that Buddy will be able to lag.
+        /// </summary>
+        private const int MAX_OLD_POSITIONS = 240;
+
+        /// <summary>
         /// The radius of the circular player character.
         /// </summary>
         public override float Radius { get { return scale * radius; } }
         
+        /// <summary>
+        /// List of positions from previous frames. Used for Buddy's position calculations.
+        /// </summary>
+        private List<Vector2> pastPositions;
+
         /// <summary>
         /// Current scale of the player character.
         /// </summary>
@@ -47,6 +58,7 @@ namespace Lag.Entities
             : base(position, new Vector2(0.0f))
         {
             radius = 60.0f;
+            pastPositions = new List<Vector2>();
         }
 
         public void LoadContent(ContentManager content)
@@ -70,6 +82,8 @@ namespace Lag.Entities
         /// </summary>
         private void ResolveMotion()
         {
+            PushPastPosition(position);
+
             // Apply friction.
             // Use length squared for vector comparisons - squaring the other value is far faster
             // than square-rooting the velocity.
@@ -101,6 +115,50 @@ namespace Lag.Entities
 
             // Apply position change.
             position += velocity;
+        }
+
+        /// <summary>
+        /// Push an old position onto the old positions list.
+        /// </summary>
+        /// <param name="position">The position to add.</param>
+        private void PushPastPosition(Vector2 position)
+        {
+            if (pastPositions.Count < MAX_OLD_POSITIONS)
+            {
+                // If we haven't reached the limit, add another Vector2.
+                // Create a new Vector2, otherwise it would just add a reference and the value would change.
+                pastPositions.Add(new Vector2(position.X, position.Y));
+            }
+            else
+            {
+                // If we have reached the limit, reuse the oldest Vector2.
+                // Pop it off the top, change the values and add it to the end again.
+                Vector2 pos = pastPositions[0];
+                pastPositions.RemoveAt(0);
+                pos.X = position.X;
+                pos.Y = position.Y;
+                pastPositions.Add(pos);
+            }
+        }
+
+        /// <summary>
+        /// Returns the position from [index] frames ago.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Vector2 GetPastPosition(int index)
+        {
+            // Check if we've saved [index] entries.
+            if (index < pastPositions.Count)
+            {
+                // Return the position [index] places from the end of the list.
+                return pastPositions[pastPositions.Count - index - 1];
+            }
+            else
+            {
+                // If not enough elements, return the oldest element.
+                return pastPositions[0];
+            }
         }
 
         public Buddy SpawnBuddy()

@@ -29,6 +29,10 @@ namespace Lag.Screens
         /// </summary>
         private Texture2D hudTexture;
 
+        /// <summary>
+        /// Buddy will lag this number of frames behind the player's movements.
+        /// </summary>
+        private int lag = 0;
         private int score = 0;
 
         private Player player;
@@ -84,6 +88,20 @@ namespace Lag.Screens
             {
                 enemy.Update(gameTime);
 
+                // Check for collision with player.
+                if (CheckCollision(enemy, player))
+                {
+                    lag += 10;
+                    enemy.Kill();
+                }
+
+                // Check for collision with buddy.
+                if (CheckCollision(enemy, buddy))
+                {
+                    lag += 20;
+                    enemy.Kill();
+                }
+
                 // If the enemy is dead or outside the map, put on removal queue.
                 if (enemy.IsDead || enemy.Position.X > MAP_WIDTH + 30)
                 {
@@ -134,7 +152,7 @@ namespace Lag.Screens
             
 
             player.Update(gameTime);
-            buddy.Update(gameTime);
+            buddy.Update(gameTime, lag);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -163,6 +181,9 @@ namespace Lag.Screens
         {
             spriteBatch.Draw(hudTexture, new Vector2(5, 5), new Rectangle(0, 0, 115, 76), Color.White);
             spriteBatch.DrawString(hudFont, score.ToString(), new Vector2(11, 33), Color.White);
+
+            spriteBatch.Draw(hudTexture, new Vector2(680, 5), new Rectangle(115, 0, 115, 76), Color.White);
+            spriteBatch.DrawString(hudFont, lag.ToString(), new Vector2(686, 33), Color.White);
         }
 
         /// <summary>
