@@ -77,6 +77,7 @@
     <Content Include="Content\background.png" />
     <Content Include="Content\buddy.png" />
     <Content Include="Content\enemy.png" />
+    <Content Include="Content\eyesnormal.png" />
     <Content Include="Content\hud.png" />
     <Content Include="Content\pickup.png" />
     <Content Include="Content\player.png" />

@@ -52,7 +52,8 @@ namespace Lag.Entities
         /// </summary>
         private float maxSpeed = 6;
 
-        private Texture2D texture;
+        private Texture2D bodyTexture;
+        private Texture2D eyesTexture;
 
         public Player(Vector2 position)
             : base(position, new Vector2(0.0f))
@@ -63,7 +64,8 @@ namespace Lag.Entities
 
         public void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("player");
+            bodyTexture = content.Load<Texture2D>("player");
+            eyesTexture = content.Load<Texture2D>("eyesnormal");
         }
 
         public override void Update(GameTime gameTime)
@@ -74,7 +76,8 @@ namespace Lag.Entities
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, null, Color.White, 0.0f, new Vector2(60.0f, 60.0f), scale, SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(bodyTexture, position, null, Color.White, 0.0f, new Vector2(60.0f, 60.0f), scale, SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(eyesTexture, position - new Vector2(0.0f, scale * 24.0f), null, Color.White, 0.0f, new Vector2(12.0f, 12.0f), scale, SpriteEffects.None, 0.0f);
         }
 
         /// <summary>
