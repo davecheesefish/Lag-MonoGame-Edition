@@ -81,6 +81,8 @@
     <Content Include="Content\hud.png" />
     <Content Include="Content\pickup.png" />
     <Content Include="Content\player.png" />
+    <Content Include="Content\sound\enemy-hit.wav" />
+    <Content Include="Content\sound\pickup.wav" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

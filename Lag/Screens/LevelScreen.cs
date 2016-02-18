@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Lag.Entities;
@@ -40,13 +41,15 @@ namespace Lag.Screens
 
         private List<Enemy> enemies;
         private Queue<Enemy> deadEnemies;
-        double enemySpawnInterval = 2.0;
-        double enemySpawnTimer = 0.0;
+        private double enemySpawnInterval = 2.0;
+        private double enemySpawnTimer = 0.0;
+        private SoundEffect enemyHitSound;
 
         private List<Pickup> pickups;
         private Queue<Pickup> deadPickups;
-        double pickupSpawnInterval = 4.13;
-        double pickupSpawnTimer = 0.5;
+        private double pickupSpawnInterval = 4.13;
+        private double pickupSpawnTimer = 0.5;
+        private SoundEffect pickupCollectSound;
 
         private const int MAP_WIDTH = 800;
         private const int MAP_HEIGHT = 600;
@@ -69,6 +72,10 @@ namespace Lag.Screens
             this.contentManager = contentManager;
             hudFont = contentManager.Load<SpriteFont>(@"fonts\hudfont");
             hudTexture = contentManager.Load<Texture2D>("hud");
+
+            enemyHitSound = contentManager.Load<SoundEffect>(@"sound\enemy-hit");
+            pickupCollectSound = contentManager.Load<SoundEffect>(@"sound\pickup");
+
             player.LoadContent(contentManager);
             buddy.LoadContent(contentManager);
         }
@@ -92,6 +99,7 @@ namespace Lag.Screens
                 if (CheckCollision(enemy, player))
                 {
                     lag += 10;
+                    enemyHitSound.Play();
                     enemy.Kill();
                 }
 
@@ -99,6 +107,7 @@ namespace Lag.Screens
                 if (CheckCollision(enemy, buddy))
                 {
                     lag += 20;
+                    enemyHitSound.Play();
                     enemy.Kill();
                 }
 
@@ -130,6 +139,7 @@ namespace Lag.Screens
                 if (CheckCollision(pickup, player))
                 {
                     score += 10;
+                    pickupCollectSound.Play();
                     pickup.Kill();
                 }
 
@@ -137,6 +147,7 @@ namespace Lag.Screens
                 if (CheckCollision(pickup, buddy))
                 {
                     score += 20;
+                    pickupCollectSound.Play();
                     pickup.Kill();
                 }
 

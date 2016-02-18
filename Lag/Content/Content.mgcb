@@ -96,3 +96,15 @@
 /processorParam:TextureFormat=Color
 /build:eyesnormal.png
 
+#begin sound/enemy-hit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/enemy-hit.wav
+
+#begin sound/pickup.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/pickup.wav
+
