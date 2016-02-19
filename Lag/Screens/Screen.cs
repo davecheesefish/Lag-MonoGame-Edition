@@ -13,8 +13,20 @@ namespace Lag.Screens
     /// </summary>
     abstract class Screen
     {
+        protected ScreenManager manager;
+
+        public Screen(ScreenManager manager)
+        {
+            this.manager = manager;
+        }
+
         public abstract void LoadContent(ContentManager contentManager);
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+
+        protected void GoToScreen(Screen screen)
+        {
+            manager.GoTo(screen);
+        }
     }
 }

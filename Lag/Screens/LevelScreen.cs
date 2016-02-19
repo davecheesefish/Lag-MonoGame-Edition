@@ -34,7 +34,16 @@ namespace Lag.Screens
         /// Buddy will lag this number of frames behind the player's movements.
         /// </summary>
         private int lag = 0;
+
+        /// <summary>
+        /// The current score for the level.
+        /// </summary>
         private int score = 0;
+
+        /// <summary>
+        /// The remaining time limit for play.
+        /// </summary>
+        private TimeSpan timeLimit = TimeSpan.FromMinutes(3.0);
 
         private Player player;
         private Buddy buddy;
@@ -54,8 +63,8 @@ namespace Lag.Screens
         private const int MAP_WIDTH = 800;
         private const int MAP_HEIGHT = 600;
 
-        public LevelScreen()
-            : base()
+        public LevelScreen(ScreenManager manager)
+            : base(manager)
         {
             player = new Player(new Vector2(MAP_WIDTH / 2.0f, MAP_HEIGHT / 2.0f));
             buddy = player.SpawnBuddy();
@@ -82,6 +91,14 @@ namespace Lag.Screens
 
         public override void Update(GameTime gameTime)
         {
+            // Decrement the play time remaining.
+            timeLimit = timeLimit.Subtract(gameTime.ElapsedGameTime);
+            if (timeLimit <= TimeSpan.Zero)
+            {
+                // If time is up, go to main menu.
+                GoToScreen(new MenuScreen(manager));
+            }
+
             // Decrement enemy spawn timer and spawn if the interval has expired.
             enemySpawnTimer -= gameTime.ElapsedGameTime.TotalSeconds;
             if (enemySpawnTimer <= 0.0)
@@ -195,6 +212,10 @@ namespace Lag.Screens
 
             spriteBatch.Draw(hudTexture, new Vector2(680, 5), new Rectangle(115, 0, 115, 76), Color.White);
             spriteBatch.DrawString(hudFont, lag.ToString(), new Vector2(686, 33), Color.White);
+
+            string timeString = timeLimit.Minutes.ToString() + " " + timeLimit.Seconds.ToString();
+            float timeWidth = hudFont.MeasureString(timeString).X;
+            spriteBatch.DrawString(hudFont, timeString, new Vector2(400 - (timeWidth / 2.0f), 15), Color.Black);
         }
 
         /// <summary>
