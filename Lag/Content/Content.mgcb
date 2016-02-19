@@ -108,3 +108,9 @@
 /processorParam:Quality=Best
 /build:sound/pickup.wav
 
+#begin sound/music/main.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/music/main.wav
+

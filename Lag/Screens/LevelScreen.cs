@@ -60,6 +60,8 @@ namespace Lag.Screens
         private double pickupSpawnTimer = 0.5;
         private SoundEffect pickupCollectSound;
 
+        private SoundEffect bgMusic;
+
         private const int MAP_WIDTH = 800;
         private const int MAP_HEIGHT = 600;
 
@@ -84,6 +86,9 @@ namespace Lag.Screens
 
             enemyHitSound = contentManager.Load<SoundEffect>(@"sound\enemy-hit");
             pickupCollectSound = contentManager.Load<SoundEffect>(@"sound\pickup");
+
+            bgMusic = contentManager.Load<SoundEffect>(@"sound\music\main");
+            bgMusic.Play();
 
             player.LoadContent(contentManager);
             buddy.LoadContent(contentManager);
