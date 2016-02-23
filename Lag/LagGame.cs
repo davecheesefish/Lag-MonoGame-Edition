@@ -41,7 +41,7 @@ namespace Lag
         protected override void Initialize()
         {
             screenManager = new ScreenManager(Content);
-            screenManager.GoTo(new LevelScreen(screenManager));
+            screenManager.GoTo(new MenuScreen(screenManager));
 
             InputManager.Instance.Initialize();
 
