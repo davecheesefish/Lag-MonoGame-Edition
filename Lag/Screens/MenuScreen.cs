@@ -34,13 +34,14 @@ namespace Lag.Screens
         /// <summary>
         /// The y position of the first menu item.
         /// </summary>
-        private float menuYPos = 250.0f;
+        private float menuYPos = 260.0f;
 
         /// <summary>
         /// Vertical separation of menu items.
         /// </summary>
         private float menuYSep = 30.0f;
 
+        private Texture2D titleTexture;
         private Texture2D menuBgTexture;
         private SpriteFont menuItemFont;
 
@@ -51,6 +52,7 @@ namespace Lag.Screens
 
         public override void LoadContent(ContentManager contentManager)
         {
+            titleTexture = contentManager.Load<Texture2D>("title");
             menuBgTexture = contentManager.Load<Texture2D>("menubackground");
             menuItemFont = contentManager.Load<SpriteFont>(@"fonts\menufont");
         }
@@ -80,6 +82,9 @@ namespace Lag.Screens
         {
             // Draw the menu background.
             spriteBatch.Draw(menuBgTexture, new Vector2(197.0f, 0.0f), Color.White);
+
+            // Draw the title.
+            spriteBatch.Draw(titleTexture, new Vector2(292.0f, 163.0f), Color.White);
 
             Color itemColor;
             for (int i = 0; i < menuItems.Length; ++i)

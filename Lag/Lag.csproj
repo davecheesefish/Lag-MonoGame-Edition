@@ -86,6 +86,7 @@
     <Content Include="Content\sound\enemy-hit.wav" />
     <Content Include="Content\sound\music\main.wav" />
     <Content Include="Content\sound\pickup.wav" />
+    <Content Include="Content\title.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
