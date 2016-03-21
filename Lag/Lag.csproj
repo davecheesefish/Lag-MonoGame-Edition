@@ -63,6 +63,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\LevelScreen.cs" />
+    <Compile Include="Screens\CreditsScreen.cs" />
     <Compile Include="Screens\MenuScreen.cs" />
     <Compile Include="Screens\Screen.cs" />
     <Compile Include="Screens\ScreenManager.cs" />
@@ -77,6 +78,7 @@
   <ItemGroup>
     <Content Include="Content\background.png" />
     <Content Include="Content\buddy.png" />
+    <Content Include="Content\credits.png" />
     <Content Include="Content\enemy.png" />
     <Content Include="Content\eyesnormal.png" />
     <Content Include="Content\hud.png" />

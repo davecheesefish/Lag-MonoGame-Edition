@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,7 +15,7 @@ namespace Lag.Screens
         /// <summary>
         /// Menu option strings.
         /// </summary>
-        private string[] menuItems = { "Play game" };
+        private string[] menuItems = { "Play game", "Credits" };
 
         /// <summary>
         /// Text colour for the active menu item.
@@ -135,6 +131,9 @@ namespace Lag.Screens
             {
                 case 0: // Play game
                     manager.GoTo(new LevelScreen(manager));
+                    break;
+                case 1: // Credits
+                    manager.GoTo(new CreditsScreen(manager));
                     break;
             }
         }
