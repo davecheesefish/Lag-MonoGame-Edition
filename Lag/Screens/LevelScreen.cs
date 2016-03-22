@@ -218,9 +218,26 @@ namespace Lag.Screens
             spriteBatch.Draw(hudTexture, new Vector2(680, 5), new Rectangle(115, 0, 115, 76), Color.White);
             spriteBatch.DrawString(hudFont, lag.ToString(), new Vector2(686, 33), Color.White);
 
-            string timeString = timeLimit.Minutes.ToString() + " " + timeLimit.Seconds.ToString();
+            string timeString = timeLimit.Minutes.ToString() + " " + FormatTimeComponent(timeLimit.Seconds);
             float timeWidth = hudFont.MeasureString(timeString).X;
             spriteBatch.DrawString(hudFont, timeString, new Vector2(400 - (timeWidth / 2.0f), 15), Color.Black);
+        }
+
+        /// <summary>
+        /// Adds a leading zero to timer components that are less than 10 and returns it as a
+        /// string.
+        /// </summary>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        private string FormatTimeComponent(int component)
+        {
+            string timeString = component.ToString();
+            if (component < 10)
+            {
+                timeString = "0" + timeString;
+            }
+
+            return timeString;
         }
 
         /// <summary>
