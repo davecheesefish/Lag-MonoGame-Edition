@@ -160,7 +160,12 @@ namespace Lag.Screens
                 // Check for collision with player.
                 if (CheckCollision(pickup, player))
                 {
+                    // If player collects pickup, add 10 points and reduce lag by 1
                     score += 10;
+                    if (lag > 0)
+                    {
+                        lag -= 1;
+                    }
                     pickupCollectSound.Play();
                     pickup.Kill();
                 }
@@ -168,7 +173,16 @@ namespace Lag.Screens
                 // Check for collision with buddy.
                 if (CheckCollision(pickup, buddy))
                 {
+                    // If Buddy collects pickup, add 20 points and reduce lag by 10
                     score += 20;
+                    if (lag >= 10)
+                    {
+                        lag -= 10;
+                    }
+                    else
+                    {
+                        lag = 0;
+                    }
                     pickupCollectSound.Play();
                     pickup.Kill();
                 }
