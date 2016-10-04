@@ -44,6 +44,7 @@ namespace Lag
             screenManager.GoTo(new MenuScreen(screenManager));
 
             InputManager.Instance.Initialize();
+            Scores.HighScores.Initialize();
 
             IsFixedTimeStep = true;
             TargetElapsedTime = System.TimeSpan.FromMilliseconds(1000.0 / 60.0); // 60 FPS

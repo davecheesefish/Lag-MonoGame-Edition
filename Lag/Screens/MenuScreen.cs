@@ -15,7 +15,7 @@ namespace Lag.Screens
         /// <summary>
         /// Menu option strings.
         /// </summary>
-        private string[] menuItems = { "Play game", "Credits" };
+        private string[] menuItems = { "Play game", "High Scores", "Credits" };
 
         /// <summary>
         /// Text colour for the active menu item.
@@ -132,7 +132,10 @@ namespace Lag.Screens
                 case 0: // Play game
                     manager.GoTo(new LevelScreen(manager));
                     break;
-                case 1: // Credits
+                case 1: // High scores
+                    manager.GoTo(new HighScoreScreen(manager, Scores.HighScores.Normal));
+                    break;
+                case 2: // Credits
                     manager.GoTo(new CreditsScreen(manager));
                     break;
             }

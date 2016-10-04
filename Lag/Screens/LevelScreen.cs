@@ -100,8 +100,12 @@ namespace Lag.Screens
             timeLimit = timeLimit.Subtract(gameTime.ElapsedGameTime);
             if (timeLimit <= TimeSpan.Zero)
             {
-                // If time is up, go to main menu.
-                GoToScreen(new MenuScreen(manager));
+                // If time is up, log the score...
+                string scoreId = Scores.HighScores.Normal.AddScore(DateTime.Today.ToShortDateString(), score);
+                Scores.HighScores.Normal.SaveToFile(Scores.HighScores.NormalFilePath);
+
+                // ...and go to the high scores screen.
+                GoToScreen(new HighScoreScreen(manager, Scores.HighScores.Normal, scoreId));
             }
 
             // Decrement enemy spawn timer and spawn if the interval has expired.
